@@ -2,6 +2,7 @@
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
+use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\DB;
 
 /*
@@ -17,4 +18,9 @@ use Illuminate\Support\Facades\DB;
 
 $router->get('/', function () use ($router) {
     return $router->app->version();
+});
+
+$router->group(["prefix" => "users", "middleware" => "auth"], function() use ($router) {
+    $router->get("count", "UsersController@countUsers");
+    $router->get("list", "UsersController@listUsers");
 });
